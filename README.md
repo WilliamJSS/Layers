@@ -31,7 +31,7 @@ This command will generate code follow:
 ```php
 <?php
 
-namespace Example;
+namespace App\Repositories\Example;
 
 use App\Models\Example;
 
