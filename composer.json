@@ -1,0 +1,20 @@
+{
+    "name": "williamjss/layers",
+    "description": "A package to generate files for layered architecture",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "WilliamJSS\\Layers\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "William Sena",
+            "email": "williamsena088@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.2"
+    }
+}
