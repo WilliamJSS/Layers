@@ -1,0 +1,47 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Models\{{ class }};
+
+interface {{ class }}RepositoryInterface
+{
+    public function __construct({{ class }} ${{ modelVariable }});
+
+    /**
+     * Armazena uma nova instância de {{ class }} no banco de dados
+     * @param \Illuminate\Support\Collection|array|int|string $data
+     * @return {{ class }}
+     */
+    public function store($data);
+
+    /**
+     * Retorna todas as instâncias de {{ class }} do banco de dados
+     * @param array|string $columns
+     * @param array<array> $filters
+     * @return \Illuminate\Database\Eloquent\Collection<int, static>
+     */
+    public function getList($columns=['*'], $filters=null);
+
+    /**
+     * Retorna uma instância de {{ class }} a partir do id informado
+     * @param int|string $id
+     * @return {{ class }}
+     */
+    public function get($id);
+
+    /**
+     * Atualiza os dados de uma instância de {{ class }}
+     * @param \Illuminate\Support\Collection|array|int|string $data $data
+     * @param int|string $id
+     * @return {{ class }}
+     */
+    public function update($data, $id);
+
+    /**
+     * Remove uma instância de {{ class }} do banco de dados
+     * @param int|string $id
+     * @return int
+     */
+    public function destroy($id);
+}

@@ -15,6 +15,16 @@
         }
     ],
     "require": {
-        "php": ">=8.0.2"
+        "php": "^8.0.2",
+        "illuminate/support": "^10.18",
+        "illuminate/console": "^10.18",
+        "symfony/finder": "^6.3"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WilliamJSS\\Layers\\Providers\\ServiceProvider"
+            ]
+        }
     }
 }

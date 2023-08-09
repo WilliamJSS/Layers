@@ -1,0 +1,69 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Models\{{ class }};
+
+class {{ class }}RepositoryEloquent implements {{ class }}RepositoryInterface
+{
+    protected ${{ modelVariable }};
+
+    public function __construct({{ class }} ${{ modelVariable }})
+    {
+        $this->{{ modelVariable }} = ${{ modelVariable }};
+    }
+
+    /**
+     * Armazena uma nova instância de {{ class }} no banco de dados
+     * @param \Illuminate\Support\Collection|array|int|string $data
+     * @return {{ class }}
+     */
+    public function store($data)
+    {
+        return $this->{{ modelVariable }}->create($data);
+    }
+
+    /**
+     * Retorna todas as instâncias de {{ class }} do banco de dados
+     * @param array|string $columns
+     * @param array<array> $filters
+     * @return \Illuminate\Database\Eloquent\Collection<int, static>
+     */
+    public function getList($columns=['*'], $filters=null)
+    {
+        return $this->{{ modelVariable }}->where($filters)->get($columns);
+    }
+
+    /**
+     * Retorna uma instância de {{ class }} a partir do id informado
+     * @param int|string $id
+     * @return {{ class }}
+     */
+    public function get($id)
+    {
+        return $this->{{ modelVariable }}->find($id);
+    }
+
+    /**
+     * Atualiza os dados de uma instância de {{ class }}
+     * @param \Illuminate\Support\Collection|array|int|string $data $data
+     * @param int|string $id
+     * @return {{ class }}
+     */
+    public function update($data, $id)
+    {
+        ${{ modelVariable }} = $this->{{ modelVariable }}->find($id);
+        ${{ modelVariable }}->update($data);
+        return ${{ modelVariable }}
+    }
+
+    /**
+     * Remove uma instância de {{ class }} do banco de dados
+     * @param int|string $id
+     * @return int
+     */
+    public function destroy($id)
+    {
+        return $this->{{ modelVariable }}->find($id)->delete();
+    }
+}
