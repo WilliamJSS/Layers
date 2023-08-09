@@ -9,14 +9,14 @@ interface {{ class }}RepositoryInterface
     public function __construct({{ class }} ${{ modelVariable }});
 
     /**
-     * Armazena uma nova instância de {{ class }} no banco de dados
+     * Stores a new instance of {{ class }} in the database
      * @param \Illuminate\Support\Collection|array|int|string $data
      * @return {{ class }}
      */
     public function store($data);
 
     /**
-     * Retorna todas as instâncias de {{ class }} do banco de dados
+     * Returns all instances of {{ class }} from the database
      * @param array|string $columns
      * @param array<array> $filters
      * @return \Illuminate\Database\Eloquent\Collection<int, static>
@@ -24,14 +24,14 @@ interface {{ class }}RepositoryInterface
     public function getList($columns=['*'], $filters=null);
 
     /**
-     * Retorna uma instância de {{ class }} a partir do id informado
+     * Returns an instance of {{ class }} from the given id
      * @param int|string $id
      * @return {{ class }}
      */
     public function get($id);
 
     /**
-     * Atualiza os dados de uma instância de {{ class }}
+     * Updates the data of an instance of {{ class }}
      * @param \Illuminate\Support\Collection|array|int|string $data $data
      * @param int|string $id
      * @return {{ class }}
@@ -39,7 +39,7 @@ interface {{ class }}RepositoryInterface
     public function update($data, $id);
 
     /**
-     * Remove uma instância de {{ class }} do banco de dados
+     * Removes an instance of {{ class }} from the database
      * @param int|string $id
      * @return int
      */

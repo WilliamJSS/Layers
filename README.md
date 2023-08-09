@@ -40,14 +40,14 @@ interface ExampleRepositoryInterface
     public function __construct(Example $example);
 
     /**
-     * Armazena uma nova instância de Example no banco de dados
+     * Stores a new instance of Example in the database
      * @param \Illuminate\Support\Collection|array|int|string $data
      * @return Example
      */
     public function store($data);
 
     /**
-     * Retorna todas as instâncias de Example do banco de dados
+     * Returns all instances of Example from the database
      * @param array|string $columns
      * @param array<array> $filters
      * @return \Illuminate\Database\Eloquent\Collection<int, static>
@@ -55,14 +55,14 @@ interface ExampleRepositoryInterface
     public function getList($columns=['*'], $filters=null);
 
     /**
-     * Retorna uma instância de Example a partir do id informado
+     * Returns an instance of Example from the given id
      * @param int|string $id
      * @return Example
      */
     public function get($id);
 
     /**
-     * Atualiza os dados de uma instância de Example
+     * Updates the data of an instance of Example
      * @param \Illuminate\Support\Collection|array|int|string $data $data
      * @param int|string $id
      * @return Example
@@ -70,7 +70,7 @@ interface ExampleRepositoryInterface
     public function update($data, $id);
 
     /**
-     * Remove uma instância de Example do banco de dados
+     * Removes an instance of Example from the database
      * @param int|string $id
      * @return int
      */

@@ -15,7 +15,7 @@ class {{ class }}Service
     }
 
     /**
-     * Armazena uma nova instância de {{ class }} no banco de dados
+     * Stores a new instance of {{ class }} in the database
      * @param \Illuminate\Support\Collection|array|int|string $data
      * @return \App\Models\{{ class }}
      */
@@ -25,7 +25,7 @@ class {{ class }}Service
     }
 
     /**
-     * Retorna todas as instâncias de {{ class }} do banco de dados
+     * Returns all instances of {{ class }} from the database
      * @return \Illuminate\Database\Eloquent\Collection<int, static>
      */
     public function getList()
@@ -34,7 +34,7 @@ class {{ class }}Service
     }
 
     /**
-     * Retorna uma instância de {{ class }} a partir do id informado
+     * Returns an instance of {{ class }} from the given id
      * @param int|string $id
      * @return \App\Models\{{ class }}
      */
@@ -44,7 +44,7 @@ class {{ class }}Service
     }
 
     /**
-     * Atualiza os dados de uma instância de {{ class }}
+     * Updates the data of an instance of {{ class }}
      * @param \Illuminate\Support\Collection|array|int|string $data $data
      * @param int|string $id
      * @return \App\Models\{{ class }}
@@ -55,7 +55,7 @@ class {{ class }}Service
     }
 
     /**
-     * Remove uma instância de {{ class }} do banco de dados
+     * Removes an instance of {{ class }} from the database
      * @param int|string $id
      * @return int
      */

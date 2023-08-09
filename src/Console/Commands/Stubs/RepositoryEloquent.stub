@@ -14,7 +14,7 @@ class {{ class }}RepositoryEloquent implements {{ class }}RepositoryInterface
     }
 
     /**
-     * Armazena uma nova instância de {{ class }} no banco de dados
+     * Stores a new instance of {{ class }} in the database
      * @param \Illuminate\Support\Collection|array|int|string $data
      * @return {{ class }}
      */
@@ -24,7 +24,7 @@ class {{ class }}RepositoryEloquent implements {{ class }}RepositoryInterface
     }
 
     /**
-     * Retorna todas as instâncias de {{ class }} do banco de dados
+     * Returns all instances of {{ class }} from the database
      * @param array|string $columns
      * @param array<array> $filters
      * @return \Illuminate\Database\Eloquent\Collection<int, static>
@@ -35,7 +35,7 @@ class {{ class }}RepositoryEloquent implements {{ class }}RepositoryInterface
     }
 
     /**
-     * Retorna uma instância de {{ class }} a partir do id informado
+     * Returns an instance of {{ class }} from the given id
      * @param int|string $id
      * @return {{ class }}
      */
@@ -45,7 +45,7 @@ class {{ class }}RepositoryEloquent implements {{ class }}RepositoryInterface
     }
 
     /**
-     * Atualiza os dados de uma instância de {{ class }}
+     * Updates the data of an instance of {{ class }}
      * @param \Illuminate\Support\Collection|array|int|string $data $data
      * @param int|string $id
      * @return {{ class }}
@@ -58,7 +58,7 @@ class {{ class }}RepositoryEloquent implements {{ class }}RepositoryInterface
     }
 
     /**
-     * Remove uma instância de {{ class }} do banco de dados
+     * Removes an instance of {{ class }} from the database
      * @param int|string $id
      * @return int
      */
