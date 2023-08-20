@@ -23,8 +23,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "WilliamJSS\\Layers\\Providers\\LayersServiceProvider",
-                "WilliamJSS\\Layers\\Providers\\RepositoryBindServiceProvider"
+                "WilliamJSS\\Layers\\Providers\\LayersServiceProvider"
             ]
         }
     }
