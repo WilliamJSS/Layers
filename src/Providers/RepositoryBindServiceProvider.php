@@ -11,11 +11,7 @@ class RepositoryBindServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // Create repository directory
         $path = app_path('Repositories');
-        if (!Storage::exists($path)) {
-            Storage::makeDirectory($path);
-        }
 
         if (Storage::exists($path)) {
             
