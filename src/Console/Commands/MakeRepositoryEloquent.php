@@ -90,7 +90,7 @@ class MakeRepositoryEloquent extends GeneratorCommand
      */
     protected function getStub()
     {
-        return base_path('vendor/williamjss/layers') . '/Console/Commands/Stubs/RepositoryEloquent.stub';
+        return base_path('vendor/williamjss/layers') . 'src/Console/Commands/Stubs/RepositoryEloquent.stub';
     }
 
 

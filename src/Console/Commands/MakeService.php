@@ -37,7 +37,7 @@ class MakeService extends GeneratorCommand
      */
     protected function getStub()
     {
-        return base_path('vendor/williamjss/layers') . '/Console/Commands/Stubs/Service.stub';
+        return base_path('vendor/williamjss/layers') . 'src/Console/Commands/Stubs/Service.stub';
     }
 
     /**
