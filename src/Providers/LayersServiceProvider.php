@@ -10,11 +10,6 @@ use WilliamJSS\Layers\Console\Commands\MakeService;
 
 class LayersServiceProvider extends ServiceProvider
 {
-    public function register()
-    {
-        $this->app->register('WilliamJSS\Layers\Providers\RepositoryBindServiceProvider');
-    }
-
     public function boot()
     {
         if ($this->app->runningInConsole()) {
