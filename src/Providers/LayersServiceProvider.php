@@ -1,5 +1,7 @@
 <?php
 
+namespace WilliamJSS\Layers\Providers;
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
