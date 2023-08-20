@@ -63,7 +63,7 @@ interface ExampleRepositoryInterface
 
     /**
      * Updates the data of an instance of Example
-     * @param \Illuminate\Support\Collection|array|int|string $data $data
+     * @param \Illuminate\Support\Collection|array|int|string $data
      * @param int|string $id
      * @return Example
      */

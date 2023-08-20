@@ -45,7 +45,7 @@ class {{ class }}Service
 
     /**
      * Updates the data of an instance of {{ class }}
-     * @param \Illuminate\Support\Collection|array|int|string $data $data
+     * @param \Illuminate\Support\Collection|array|int|string $data
      * @param int|string $id
      * @return \App\Models\{{ class }}
      */
