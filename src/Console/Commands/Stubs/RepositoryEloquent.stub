@@ -54,7 +54,7 @@ class {{ class }}RepositoryEloquent implements {{ class }}RepositoryInterface
     {
         ${{ modelVariable }} = $this->{{ modelVariable }}->find($id);
         ${{ modelVariable }}->update($data);
-        return ${{ modelVariable }}
+        return ${{ modelVariable }};
     }
 
     /**

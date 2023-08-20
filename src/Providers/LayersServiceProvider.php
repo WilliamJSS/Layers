@@ -56,9 +56,5 @@ class LayersServiceProvider extends ServiceProvider
                 MakeService::class,
             ]);
         }
-
-        $this->publishes([
-            __DIR__ . '/../Console/Commands/Stubs' => app_path('Console/Commands')
-        ], 'stubs');
     }
 }

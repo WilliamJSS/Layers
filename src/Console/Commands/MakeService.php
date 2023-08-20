@@ -14,7 +14,7 @@ class MakeService extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'layer:service {name}';
+    protected $signature = 'layers:service {name}';
 
     /**
      * The console command description.
@@ -37,7 +37,7 @@ class MakeService extends GeneratorCommand
      */
     protected function getStub()
     {
-        return app_path() . '/Console/Commands/Stubs/Service.stub';
+        return base_path('vendor/williamjss/layers') . '/Console/Commands/Stubs/Service.stub';
     }
 
     /**

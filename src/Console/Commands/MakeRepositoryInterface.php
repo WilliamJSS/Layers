@@ -13,7 +13,7 @@ class MakeRepositoryInterface extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'layer:repository:interface {name}';
+    protected $signature = 'layers:repository:interface {name}';
 
     /**
      * The console command description.
@@ -90,7 +90,7 @@ class MakeRepositoryInterface extends GeneratorCommand
      */
     protected function getStub()
     {
-        return app_path() . '/Console/Commands/Stubs/RepositoryInterface.stub';
+        return base_path('vendor/williamjss/layers') . '/Console/Commands/Stubs/RepositoryInterface.stub';
     }
 
 

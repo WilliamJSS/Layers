@@ -10,21 +10,21 @@ composer require williamjss/layers
 
 ## Usage
 
-Using the `layer` artisan command, we can be generate files for repositories (interface and eloquent) and services.
+Using the `layers` artisan command, we can be generate files for repositories (interface and eloquent) and services.
 
-`php artisan layer` + `{model name}` + `{option}`
+`php artisan layers` + `{option}` + `{model name}`
 
 Available options:
 
-- **--e** or **--eloquent** : Generate a repository eloquent for the model
-- **--i** or **--interface** : Generate a repository interface for the model
-- **--s** or **--service** : Generate a service for the model
-- **--r** or **--repository** : Generate a repository interface and eloquent for the model
-- **--a** or **--all** : Generate a service, repository interface and repository eloquent for the model
+- **-e** or **--eloquent** : Generate a repository eloquent for the model
+- **-i** or **--interface** : Generate a repository interface for the model
+- **-s** or **--service** : Generate a service for the model
+- **-r** or **--repository** : Generate a repository interface and eloquent for the model
+- **-a** or **--all** : Generate a service, repository interface and repository eloquent for the model
 
 ### Example
 ```bash
-php artisan layer Example --interface
+php artisan layers --interface Example
 ```
 
 This command will generate code follow:

@@ -13,7 +13,7 @@ class MakeRepositoryEloquent extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'layer:repository:eloquent {name}';
+    protected $signature = 'layers:repository:eloquent {name}';
 
     /**
      * The console command description.
@@ -90,7 +90,7 @@ class MakeRepositoryEloquent extends GeneratorCommand
      */
     protected function getStub()
     {
-        return app_path() . '/Console/Commands/Stubs/RepositoryEloquent.stub';
+        return base_path('vendor/williamjss/layers') . '/Console/Commands/Stubs/RepositoryEloquent.stub';
     }
 
 

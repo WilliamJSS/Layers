@@ -12,7 +12,7 @@ class MakeLayer extends Command
      * @var string
      */
     protected $signature = '
-        layer {name}
+        layers {name}
         {--e|eloquent : Generate a repository eloquent for the model}
         {--i|interface : Generate a repository interface for the model}
         {--s|service : Generate a service for the model}
@@ -38,30 +38,30 @@ class MakeLayer extends Command
         $options = $this->options();
 
         if ($options['all']) {
-            $this->call('layer:repository:interface', ['name' => $name]);
-            $this->call('layer:repository:eloquent', ['name' => $name]);
-            $this->call('layer:service', ['name' => $name]);
+            $this->call('layers:repository:interface', ['name' => $name]);
+            $this->call('layers:repository:eloquent', ['name' => $name]);
+            $this->call('layers:service', ['name' => $name]);
 
             return Command::SUCCESS;
         }
 
         if ($options['repository']) {
-            $this->call('layer:repository:interface', ['name' => $name]);
-            $this->call('layer:repository:eloquent', ['name' => $name]);
+            $this->call('layers:repository:interface', ['name' => $name]);
+            $this->call('layers:repository:eloquent', ['name' => $name]);
 
             return Command::SUCCESS;
         }
 
         if ($options['interface']) {
-            $this->call('layer:repository:eloquent', ['name' => $name]);
+            $this->call('layers:repository:eloquent', ['name' => $name]);
         }
 
         if ($options['eloquent']) {
-            $this->call('layer:repository:interface', ['name' => $name]);
+            $this->call('layers:repository:interface', ['name' => $name]);
         }
 
         if ($options['service']) {
-            $this->call('layer:service', ['name' => $name]);
+            $this->call('layers:service', ['name' => $name]);
         }
 
         return Command::SUCCESS;
