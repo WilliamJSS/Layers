@@ -38,26 +38,26 @@ class MakeLayer extends Command
         $options = $this->options();
 
         if ($options['all']) {
-            $this->call('layers:repository --interface', ['name' => $name]);
-            $this->call('layers:repository --eloquent', ['name' => $name]);
+            $this->call('layers:repository', ['name' => $name, '--interface' => true]);
+            $this->call('layers:repository', ['name' => $name, '--eloquent' => true]);
             $this->call('layers:service', ['name' => $name]);
 
             return Command::SUCCESS;
         }
 
         if ($options['repository']) {
-            $this->call('layers:repository --interface', ['name' => $name]);
-            $this->call('layers:repository --eloquent', ['name' => $name]);
+            $this->call('layers:repository', ['name' => $name, '--interface' => true]);
+            $this->call('layers:repository', ['name' => $name, '--eloquent' => true]);
 
             return Command::SUCCESS;
         }
 
         if ($options['interface']) {
-            $this->call('layers:repository --eloquent', ['name' => $name]);
+            $this->call('layers:repository', ['name' => $name, '--eloquent' => true]);
         }
 
         if ($options['eloquent']) {
-            $this->call('layers:repository --interface', ['name' => $name]);
+            $this->call('layers:repository', ['name' => $name, '--interface' => true]);
         }
 
         if ($options['service']) {
