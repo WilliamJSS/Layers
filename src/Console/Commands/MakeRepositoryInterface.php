@@ -90,7 +90,7 @@ class MakeRepositoryInterface extends GeneratorCommand
      */
     protected function getStub()
     {
-        return base_path('vendor/williamjss/layers') . 'src/Console/Commands/Stubs/RepositoryInterface.stub';
+        return base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/RepositoryInterface.stub';
     }
 
 
