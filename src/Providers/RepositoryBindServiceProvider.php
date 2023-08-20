@@ -17,33 +17,36 @@ class RepositoryBindServiceProvider extends ServiceProvider
             Storage::makeDirectory($path);
         }
 
-        # Search files in repository folder
-        $merge = collect();
-        for ($i = 0; $i <= 2; $i++) {
-            $folders = collect((new Finder)->files()->depth($i)->in($path))
-                ->map(fn($file) => $file->getBasename('.php'))
-                ->collect()
-                ->all();
+        if (Storage::exists($path)) {
+            
+            # Search files in repository folder
+            $merge = collect();
+            for ($i = 0; $i <= 2; $i++) {
+                $folders = collect((new Finder)->files()->depth($i)->in($path))
+                    ->map(fn($file) => $file->getBasename('.php'))
+                    ->collect()
+                    ->all();
 
-            $merge = $merge->merge($folders);
-        }
-
-        # Save only repository subfolder and model into array
-        $models = $merge->keys()->collect()->map(function ($file) {
-            $model = str_replace(app_path('Repositories') . '/', '', $file);
-            $model = str_replace('.php', '', $model);
-            if (Str::contains($model, 'Interface')) {
-                return str_replace('Interface', '', $model);
+                $merge = $merge->merge($folders);
             }
-        })->values()->all();
 
-        # Bind repositories interfaces/eloquents
-        foreach ($models as $model) {
-            if ($model != null) {
-                $this->app->bind(
-                    'App\\Repositories\\' . str_replace('/', '\\', $model) . 'Interface',
-                    'App\\Repositories\\' . str_replace('/', '\\', $model) . 'Eloquent'
-                );
+            # Save only repository subfolder and model into array
+            $models = $merge->keys()->collect()->map(function ($file) {
+                $model = str_replace(app_path('Repositories') . '/', '', $file);
+                $model = str_replace('.php', '', $model);
+                if (Str::contains($model, 'Interface')) {
+                    return str_replace('Interface', '', $model);
+                }
+            })->values()->all();
+
+            # Bind repositories interfaces/eloquents
+            foreach ($models as $model) {
+                if ($model != null) {
+                    $this->app->bind(
+                        'App\\Repositories\\' . str_replace('/', '\\', $model) . 'Interface',
+                        'App\\Repositories\\' . str_replace('/', '\\', $model) . 'Eloquent'
+                    );
+                }
             }
         }
     }

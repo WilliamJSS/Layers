@@ -6,23 +6,27 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-class MakeRepositoryInterface extends GeneratorCommand
+class MakeRepository extends GeneratorCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'layers:repository:interface {name}';
+    protected $signature = '
+        layers:repository {name}
+        {--e|eloquent : Generate a repository eloquent for the model}
+        {--i|interface : Generate a repository interface for the model}
+    ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a repository interface file';
+    protected $description = 'Create a repository file';
 
-    protected $type = 'Repository Interface file';
+    protected $type = 'Repository file';
 
     protected function getNameInput()
     {
@@ -84,13 +88,40 @@ class MakeRepositoryInterface extends GeneratorCommand
     }
 
     /**
+     * Get the repository type
+     *
+     * @return string
+     */
+    protected function getType()
+    {
+        $options = $this->options();
+        if ($options['eloquent'] && $options['interface']) {
+            throw new InvalidArgumentException('More than one option provided: expected \'eloquent\' or \'interface\', not both.');
+        }
+
+        else if ($options['eloquent']) {
+            $type = 'Eloquent';
+        }
+
+        else if ($options['interface']) {
+            $type = 'Interface';
+        }
+
+        else {
+            throw new InvalidArgumentException('Invalid option: expected \'eloquent\' or \'interface\'.');
+        }
+
+        return $type;
+    }
+
+    /**
      * Get the stub file for the generator.
      *
      * @return string
      */
     protected function getStub()
     {
-        return base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/RepositoryInterface.stub';
+        return base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/Repository' . $this->getType() . '.stub';
     }
 
 
@@ -115,6 +146,6 @@ class MakeRepositoryInterface extends GeneratorCommand
     {
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
 
-        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'RepositoryInterface.php';
+        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Repository' . $this->getType() . '.php';
     }
 }

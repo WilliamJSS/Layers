@@ -4,8 +4,7 @@ namespace WilliamJSS\Layers\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use WilliamJSS\Layers\Console\Commands\MakeLayer;
-use WilliamJSS\Layers\Console\Commands\MakeRepositoryEloquent;
-use WilliamJSS\Layers\Console\Commands\MakeRepositoryInterface;
+use WilliamJSS\Layers\Console\Commands\MakeRepository;
 use WilliamJSS\Layers\Console\Commands\MakeService;
 
 class LayersServiceProvider extends ServiceProvider
@@ -15,8 +14,7 @@ class LayersServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 MakeLayer::class,
-                MakeRepositoryEloquent::class,
-                MakeRepositoryInterface::class,
+                MakeRepository::class,
                 MakeService::class,
             ]);
         }
