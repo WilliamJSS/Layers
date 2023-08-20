@@ -2,7 +2,7 @@
 
 namespace WilliamJSS\Layers\Providers;
 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use WilliamJSS\Layers\Console\Commands\MakeLayer;
 use WilliamJSS\Layers\Console\Commands\MakeRepository;
@@ -10,6 +10,10 @@ use WilliamJSS\Layers\Console\Commands\MakeService;
 
 class LayersServiceProvider extends ServiceProvider
 {
+    public function register(){
+        $this->app->register('WilliamJSS\\Layers\\Providers\\RepositoryBindServiceProvider');
+    }
+
     public function boot()
     {
         if ($this->app->runningInConsole()) {
@@ -21,8 +25,8 @@ class LayersServiceProvider extends ServiceProvider
 
             // Create repository directory
             $path = app_path('Repositories');
-            if (!Storage::exists($path)) {
-                Storage::makeDirectory($path);
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
             }
         }
     }

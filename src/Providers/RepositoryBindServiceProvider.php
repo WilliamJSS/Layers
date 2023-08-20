@@ -2,7 +2,7 @@
 
 namespace WilliamJSS\Layers\Providers;
 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
@@ -13,7 +13,7 @@ class RepositoryBindServiceProvider extends ServiceProvider
     {
         $path = app_path('Repositories');
 
-        if (Storage::exists($path)) {
+        if (File::exists($path)) {
             
             # Search files in repository folder
             $merge = collect();
