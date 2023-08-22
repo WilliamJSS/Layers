@@ -16,8 +16,8 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/support": "^9.0",
-        "illuminate/console": "^9.0",
+        "illuminate/support": "^9.0 || 9.x-dev",
+        "illuminate/console": "^9.0 || 9.x-dev",
         "symfony/finder": "^6.3"
     },
     "extra": {
