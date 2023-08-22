@@ -2,6 +2,17 @@
 
 A laravel package to generate files for layered architecture.
 
+**Laravel version recommended:** >= `9.0` 
+
+## Requirements
+
+```json
+"php": "^8.0.2"
+"illuminate/support": "^9.0"
+"illuminate/console": "^9.0"
+"symfony/finder": "^6.3"
+```
+
 ## Installation
 
 ```bash
@@ -34,7 +45,7 @@ php artisan layers --all User
 
 <img src="./assets/structure_folder.png" alt="Structure Folder" />
 
-#### UserRepositoryInterface
+#### UserRepositoryInterface.php
 ```php
 <?php
 
@@ -85,7 +96,7 @@ interface UserRepositoryInterface
 }
 ```
 
-#### UserRepositoryEloquent
+#### UserRepositoryEloquent.php
 ```php
 <?php
 
@@ -159,7 +170,7 @@ class UserRepositoryEloquent implements UserRepositoryInterface
 
 ```
 
-#### UserService
+#### UserService.php
 ```php
 <?php
 

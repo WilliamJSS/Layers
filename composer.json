@@ -1,6 +1,6 @@
 {
     "name": "williamjss/layers",
-    "description": "A package to generate files for layered architecture",
+    "description": "A laravel package to generate files for layered architecture",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -15,10 +15,10 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "illuminate/support": "^7|^8",
-        "illuminate/console": "^7|^8",
-        "symfony/finder": "^5.4.27"
+        "php": "^8.0.2",
+        "illuminate/support": "^9.0",
+        "illuminate/console": "^9.0",
+        "symfony/finder": "^6.3"
     },
     "extra": {
         "laravel": {
