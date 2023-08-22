@@ -32,7 +32,6 @@ php artisan layers --all User
 - app/Repositories/UserRepositoryEloquent.php
 - app/Services/UserService.php
 
-<br />
 <img src="./assets/structure_folder.png" alt="Structure Folder" />
 
 #### UserRepositoryInterface
@@ -240,5 +239,4 @@ php artisan layers --repository User.Address
 - app/Repositories/User/AddressRepositoryInterface.php
 - app/Repositories/User/AddressRepositoryEloquent.php
 
-<br />
 <img src="./assets/structure_folder_with_subfolders.png" alt="Structure Folder with Subfolders" />
