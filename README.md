@@ -1,8 +1,10 @@
 # Layers
 
-A laravel package to generate files for layered architecture.
+A laravel package to generate files for layered architecture and automate interface bindings.
 
-**Laravel version recommended:** >= `9.0` 
+**Laravel version recommended:** >= `9.0`
+
+Go to [Laravel Docs](https://laravel.com/docs/9.x/releases#support-policy) to see support policy.
 
 ## Requirements
 
