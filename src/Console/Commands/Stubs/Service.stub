@@ -4,7 +4,6 @@ namespace {{ namespace }};
 
 use {{ namespaceRepository }};
 
-
 class {{ class }}Service
 {
     private $repo{{ class }};

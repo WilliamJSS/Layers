@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+{{ repositories }}
+
+class {{ class }}Service
+{{{ variables }}
+
+    public function __construct({{ construct }}
+    )
+    {{{ thisConstruct }}
+    }
+
+    // Add your functions here...
+}

@@ -16,7 +16,10 @@ class MakeService extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'layers:service {name}';
+    protected $signature = '
+        layers:service {name}
+        {--wr=*}
+    ';
 
     /**
      * The console command description.
@@ -40,7 +43,12 @@ class MakeService extends GeneratorCommand
     protected function getStub()
     {
         $stubs_path = base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/';
-        return $stubs_path . 'Service.stub';
+        
+        if ($this->withRepositories()) {
+            return $stubs_path . 'ServiceMultiRepositories.stub';
+        } else {
+            return $stubs_path . 'Service.stub';
+        }
     }
 
     /**
@@ -91,11 +99,29 @@ class MakeService extends GeneratorCommand
      */
     protected function replaceModel($stub, $model)
     {
-        $namespaceRepo = $this->parseModel($model);
-
-        $replace = [
-            '{{ namespaceRepository }}' => $namespaceRepo,
-        ];
+        if ($this->options()['wr']){
+            $repositories = '';
+            $variables = '';
+            $construct = '';
+            $thisConstruct = '';
+            foreach ($this->options()['wr'] as $key => $value) {
+                $repositories = Str::of($repositories)->newLine()->append('use ' . $this->qualifyModel($value) . ';');
+                $variables = Str::of($variables)->newLine()->append('    private $repo' . $value . ';');
+                $construct = Str::of($construct)->newLine()->append('        ' . $value . 'RepositoryInterface $repo' . $value . ',');
+                $thisConstruct = Str::of($thisConstruct)->newLine()->append('        $this->repo' . $value . ' = $repo' . $value . ';');
+            }
+            $replace = [
+                '{{ repositories }}' => $repositories,
+                '{{ variables }}' => $variables,
+                '{{ construct }}' => $construct,
+                '{{ thisConstruct }}' => $thisConstruct,
+            ];
+        } else {
+            $namespaceRepo = $this->parseModel($model);
+            $replace = [
+                '{{ namespaceRepository }}' => $namespaceRepo,
+            ];
+        }
 
         return str_replace(
             array_keys($replace),
@@ -177,5 +203,18 @@ class MakeService extends GeneratorCommand
             })
             ->collect()
             ->all();
+    }
+
+    /**
+     * Verify 'with-repositories' option
+     *
+     * @return bool
+     */
+    protected function withRepositories(){
+        if($this->options()['wr']){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 }
