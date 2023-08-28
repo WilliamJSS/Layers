@@ -12,6 +12,10 @@ class LayersServiceProvider extends ServiceProvider
 {
     public function register(){
         $this->app->register('WilliamJSS\\Layers\\Providers\\RepositoryBindServiceProvider');
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/layers.php', 'layers'
+        );
     }
 
     public function boot()
@@ -22,12 +26,11 @@ class LayersServiceProvider extends ServiceProvider
                 MakeRepository::class,
                 MakeService::class,
             ]);
-
-            // Create repository directory
-            $path = app_path('Repositories');
-            if (!File::exists($path)) {
-                File::makeDirectory($path);
-            }
+            
+            $this->publishes([
+                __DIR__.'/../config/layers.php' => config_path('layers.php')
+            ], 'layers');
         }
+
     }
 }

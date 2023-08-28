@@ -2,7 +2,9 @@
 
 namespace WilliamJSS\Layers\Console\Commands;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Finder\Finder;
@@ -14,7 +16,10 @@ class MakeService extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'layers:service {name}';
+    protected $signature = '
+        layers:service {name}
+        {--wr=*}
+    ';
 
     /**
      * The console command description.
@@ -37,7 +42,13 @@ class MakeService extends GeneratorCommand
      */
     protected function getStub()
     {
-        return base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/Service.stub';
+        $stubs_path = base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/';
+        
+        if ($this->withRepositories()) {
+            return $stubs_path . 'ServiceMultiRepositories.stub';
+        } else {
+            return $stubs_path . 'Service.stub';
+        }
     }
 
     /**
@@ -48,7 +59,7 @@ class MakeService extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Services';
+        return $rootNamespace . '\\' . config('layers.namespace.services');
     }
 
     /**
@@ -88,13 +99,29 @@ class MakeService extends GeneratorCommand
      */
     protected function replaceModel($stub, $model)
     {
-        $name = $this->argument('name');
-
-        $namespaceRepo = $this->parseModel($name);
-
-        $replace = [
-            '{{ namespaceRepository }}' => $namespaceRepo,
-        ];
+        if ($this->options()['wr']){
+            $repositories = '';
+            $variables = '';
+            $construct = '';
+            $thisConstruct = '';
+            foreach ($this->options()['wr'] as $key => $value) {
+                $repositories = Str::of($repositories)->newLine()->append('use ' . $this->qualifyModel($value) . ';');
+                $variables = Str::of($variables)->newLine()->append('    private $repo' . $value . ';');
+                $construct = Str::of($construct)->newLine()->append('        ' . $value . 'RepositoryInterface $repo' . $value . ',');
+                $thisConstruct = Str::of($thisConstruct)->newLine()->append('        $this->repo' . $value . ' = $repo' . $value . ';');
+            }
+            $replace = [
+                '{{ repositories }}' => $repositories,
+                '{{ variables }}' => $variables,
+                '{{ construct }}' => $construct,
+                '{{ thisConstruct }}' => $thisConstruct,
+            ];
+        } else {
+            $namespaceRepo = $this->parseModel($model);
+            $replace = [
+                '{{ namespaceRepository }}' => $namespaceRepo,
+            ];
+        }
 
         return str_replace(
             array_keys($replace),
@@ -128,21 +155,18 @@ class MakeService extends GeneratorCommand
      */
     protected function qualifyModel(string $model)
     {
-        $model = ltrim($model, '\\/');
+        $model = class_basename($model) . 'RepositoryInterface';
 
-        $model = str_replace('/', '\\', $model) . 'RepositoryInterface';
-
-        $rootNamespace = $this->rootNamespace();
+        $repo_path = config('layers.path.repositories');
+        $repo_namespace = config('layers.namespace.repositories');
 
         foreach ($this->possiblesRepositories() as $key => $value) {
             if (Str::contains($value, $model)) {
-                return $rootNamespace . 'Repositories\\' . str_replace('/', '\\', $value);
+                return $this->rootNamespace() . str_replace('/', '\\', Str::replaceFirst($repo_path, $repo_namespace, $value));
             }
         }
 
-        print_r($this->possiblesRepositories());
-
-        return $rootNamespace . 'Repositories\\' . $model;
+        throw new InvalidArgumentException('Repository not found: ' . $model);
     }
 
     /**
@@ -152,7 +176,11 @@ class MakeService extends GeneratorCommand
      */
     protected function possiblesRepositories()
     {
-        $repoPath = app_path('Repositories');
+        $repoPath = config('layers.path.repositories');
+
+        if(!File::exists($repoPath)){
+            throw new InvalidArgumentException('Invalid repository path: ' . $repoPath);
+        }
 
         $merge = collect();
         $depth = 2;
@@ -168,12 +196,25 @@ class MakeService extends GeneratorCommand
         return $merge
             ->keys()
             ->collect()
-            ->map(function ($file) {
-                $model = str_replace(app_path('Repositories') . '/', '', $file);
+            ->map(function ($file, $repoPath) {
+                $model = str_replace($repoPath . '/', '', $file);
                 $model = str_replace('.php', '', $model);
                 return $model;
             })
             ->collect()
             ->all();
+    }
+
+    /**
+     * Verify 'with-repositories' option
+     *
+     * @return bool
+     */
+    protected function withRepositories(){
+        if($this->options()['wr']){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 }
