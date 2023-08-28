@@ -124,29 +124,6 @@ class MakeRepository extends GeneratorCommand
     }
 
     /**
-     * Parse the class name and format according to the root namespace.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function qualifyClass($name)
-    {
-        $name = ltrim($name, '\\/');
-
-        $name = str_replace('/', '\\', $name);
-
-        $rootNamespace = $this->rootNamespace();
-
-        if (Str::startsWith($name, $rootNamespace)) {
-            return $name;
-        }
-
-        return $this->qualifyClass(
-            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
-        );
-    }
-
-    /**
      * Get the repository type
      *
      * @return string

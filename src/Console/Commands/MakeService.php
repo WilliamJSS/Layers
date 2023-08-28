@@ -91,9 +91,7 @@ class MakeService extends GeneratorCommand
      */
     protected function replaceModel($stub, $model)
     {
-        $name = $this->argument('name');
-
-        $namespaceRepo = $this->parseModel($name);
+        $namespaceRepo = $this->parseModel($model);
 
         $replace = [
             '{{ namespaceRepository }}' => $namespaceRepo,
@@ -131,15 +129,14 @@ class MakeService extends GeneratorCommand
      */
     protected function qualifyModel(string $model)
     {
-        $model = ltrim($model, '\\/');
+        $model = class_basename($model) . 'RepositoryInterface';
 
-        $model = str_replace('/', '\\', $model) . 'RepositoryInterface';
-
-        $repositoryNamespace = $this->rootNamespace() . config('layers.namespace.repositories');
+        $repo_path = config('layers.path.repositories');
+        $repo_namespace = config('layers.namespace.repositories');
 
         foreach ($this->possiblesRepositories() as $key => $value) {
             if (Str::contains($value, $model)) {
-                return $repositoryNamespace . '\\' . str_replace('/', '\\', $value);
+                return $this->rootNamespace() . str_replace('/', '\\', Str::replaceFirst($repo_path, $repo_namespace, $value));
             }
         }
 
