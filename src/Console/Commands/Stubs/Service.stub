@@ -8,58 +8,12 @@ class {{ class }}Service
 {
     private $repo{{ class }};
 
-    public function __construct({{ class }}RepositoryInterface $repo{{ class }})
+    public function __construct(
+        {{ class }}RepositoryInterface $repo{{ class }},
+    )
     {
         $this->repo{{ class }} = $repo{{ class }};
     }
 
-    /**
-     * Stores a new instance of {{ class }} in the database
-     * @param \Illuminate\Support\Collection|array|int|string $data
-     * @return \App\Models\{{ class }}
-     */
-    public function store(array $data)
-    {
-        return $this->repo{{ class }}->store($data);
-    }
-
-    /**
-     * Returns all instances of {{ class }} from the database
-     * @return \Illuminate\Database\Eloquent\Collection<int, static>
-     */
-    public function getList()
-    {
-        return $this->repo{{ class }}->getList();
-    }
-
-    /**
-     * Returns an instance of {{ class }} from the given id
-     * @param int|string $id
-     * @return \App\Models\{{ class }}
-     */
-    public function get($id)
-    {
-        return $this->repo{{ class }}->get($id);
-    }
-
-    /**
-     * Updates the data of an instance of {{ class }}
-     * @param \Illuminate\Support\Collection|array|int|string $data
-     * @param int|string $id
-     * @return \App\Models\{{ class }}
-     */
-    public function update(array $data, $id)
-    {
-        return $this->repo{{ class }}->update($data, $id);
-    }
-
-    /**
-     * Removes an instance of {{ class }} from the database
-     * @param int|string $id
-     * @return int
-     */
-    public function destroy($id)
-    {
-        return $this->repo{{ class }}->destroy($id);
-    }
+    // Add your functions here...
 }

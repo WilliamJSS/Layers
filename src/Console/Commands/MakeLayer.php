@@ -18,6 +18,7 @@ class MakeLayer extends Command
         {--s|service : Generate a service for the model}
         {--r|repository : Generate a repository interface and eloquent for the model}
         {--a|all : Generate a service, repository interface and repository eloquent for the model}
+        {--wr=*}
     ';
 
     /**
@@ -40,7 +41,7 @@ class MakeLayer extends Command
         if ($options['all']) {
             $this->call('layers:repository', ['name' => $name, '--interface' => true]);
             $this->call('layers:repository', ['name' => $name, '--eloquent' => true]);
-            $this->call('layers:service', ['name' => $name]);
+            $this->call('layers:service', ['name' => $name, '--wr' => $options['wr']]);
 
             return Command::SUCCESS;
         }
@@ -61,7 +62,7 @@ class MakeLayer extends Command
         }
 
         if ($options['service']) {
-            $this->call('layers:service', ['name' => $name]);
+            $this->call('layers:service', ['name' => $name, '--wr' => $options['wr']]);
         }
 
         return Command::SUCCESS;
