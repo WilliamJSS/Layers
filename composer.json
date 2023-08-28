@@ -17,8 +17,8 @@
     "require": {
         "php": "^8.0.2",
         "symfony/finder": "^6.3",
-        "illuminate/support": "^10.20",
-        "illuminate/console": "^10.20"
+        "illuminate/support": "^9.0 || ^10.20",
+        "illuminate/console": "^9.0 || ^10.20"
     },
     "extra": {
         "laravel": {
