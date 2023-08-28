@@ -2,7 +2,9 @@
 
 namespace WilliamJSS\Layers\Console\Commands;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Symfony\Component\Finder\Finder;
@@ -37,7 +39,8 @@ class MakeService extends GeneratorCommand
      */
     protected function getStub()
     {
-        return base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/Service.stub';
+        $stubs_path = base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/';
+        return $stubs_path . 'Service.stub';
     }
 
     /**
@@ -48,7 +51,7 @@ class MakeService extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Services';
+        return $rootNamespace . '\\' . config('layers.namespace.services');
     }
 
     /**
@@ -132,17 +135,15 @@ class MakeService extends GeneratorCommand
 
         $model = str_replace('/', '\\', $model) . 'RepositoryInterface';
 
-        $rootNamespace = $this->rootNamespace();
+        $repositoryNamespace = $this->rootNamespace() . config('layers.namespace.repositories');
 
         foreach ($this->possiblesRepositories() as $key => $value) {
             if (Str::contains($value, $model)) {
-                return $rootNamespace . 'Repositories\\' . str_replace('/', '\\', $value);
+                return $repositoryNamespace . '\\' . str_replace('/', '\\', $value);
             }
         }
 
-        print_r($this->possiblesRepositories());
-
-        return $rootNamespace . 'Repositories\\' . $model;
+        throw new InvalidArgumentException('Repository not found: ' . $model);
     }
 
     /**
@@ -152,7 +153,11 @@ class MakeService extends GeneratorCommand
      */
     protected function possiblesRepositories()
     {
-        $repoPath = app_path('Repositories');
+        $repoPath = config('layers.path.repositories');
+
+        if(!File::exists($repoPath)){
+            throw new InvalidArgumentException('Invalid repository path: ' . $repoPath);
+        }
 
         $merge = collect();
         $depth = 2;
@@ -168,8 +173,8 @@ class MakeService extends GeneratorCommand
         return $merge
             ->keys()
             ->collect()
-            ->map(function ($file) {
-                $model = str_replace(app_path('Repositories') . '/', '', $file);
+            ->map(function ($file, $repoPath) {
+                $model = str_replace($repoPath . '/', '', $file);
                 $model = str_replace('.php', '', $model);
                 return $model;
             })

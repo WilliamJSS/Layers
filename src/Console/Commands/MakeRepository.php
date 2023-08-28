@@ -2,6 +2,7 @@
 
 namespace WilliamJSS\Layers\Console\Commands;
 
+use Illuminate\Console\Command;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -31,6 +32,41 @@ class MakeRepository extends GeneratorCommand
     protected function getNameInput()
     {
         return str_replace('.', '/', trim($this->argument('name')));
+    }
+
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
+    {
+        $stubs_path = base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/';
+        return $stubs_path . 'Repository' . $this->getType() . '.stub';
+    }
+
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     * @return string
+     */
+    protected function getDefaultNamespace($rootNamespace)
+    {
+        return $rootNamespace . '\\' . config('layers.namespace.repositories');
+    }
+
+    /**
+     * Get the destination class path.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function getPath($name)
+    {
+        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
+
+        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Repository' . $this->getType() . '.php';
     }
 
     /**
@@ -88,6 +124,29 @@ class MakeRepository extends GeneratorCommand
     }
 
     /**
+     * Parse the class name and format according to the root namespace.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function qualifyClass($name)
+    {
+        $name = ltrim($name, '\\/');
+
+        $name = str_replace('/', '\\', $name);
+
+        $rootNamespace = $this->rootNamespace();
+
+        if (Str::startsWith($name, $rootNamespace)) {
+            return $name;
+        }
+
+        return $this->qualifyClass(
+            $this->getDefaultNamespace(trim($rootNamespace, '\\')).'\\'.$name
+        );
+    }
+
+    /**
      * Get the repository type
      *
      * @return string
@@ -112,40 +171,5 @@ class MakeRepository extends GeneratorCommand
         }
 
         return $type;
-    }
-
-    /**
-     * Get the stub file for the generator.
-     *
-     * @return string
-     */
-    protected function getStub()
-    {
-        return base_path('vendor/williamjss/layers') . '/src/Console/Commands/Stubs/Repository' . $this->getType() . '.stub';
-    }
-
-
-    /**
-     * Get the default namespace for the class.
-     *
-     * @param  string  $rootNamespace
-     * @return string
-     */
-    protected function getDefaultNamespace($rootNamespace)
-    {
-        return $rootNamespace . '\Repositories';
-    }
-
-    /**
-     * Get the destination class path.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function getPath($name)
-    {
-        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
-
-        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . 'Repository' . $this->getType() . '.php';
     }
 }
