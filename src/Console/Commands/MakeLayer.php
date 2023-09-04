@@ -18,7 +18,6 @@ class MakeLayer extends Command
         {--s|service : Generate a service for the model}
         {--r|repository : Generate a repository interface and eloquent for the model}
         {--a|all : Generate a service, repository interface and repository eloquent for the model}
-        {--l|list : List all binds from application}
         {--wr=*}
     ';
 
