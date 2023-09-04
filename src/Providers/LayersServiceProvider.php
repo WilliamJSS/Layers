@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use WilliamJSS\Layers\Console\Commands\MakeLayer;
 use WilliamJSS\Layers\Console\Commands\MakeRepository;
 use WilliamJSS\Layers\Console\Commands\MakeService;
+use WilliamJSS\Layers\Console\Commands\ListBinds;
 
 class LayersServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,7 @@ class LayersServiceProvider extends ServiceProvider
                 MakeLayer::class,
                 MakeRepository::class,
                 MakeService::class,
+                ListBinds::class,
             ]);
             
             $this->publishes([
