@@ -2,17 +2,26 @@
 
 A laravel package to generate files for layered architecture and automate interface bindings.
 
-**Laravel version recommended:** >= `9.0`
+**Recommended Laravel version:** `^9.0`
 
 Go to [Laravel Docs](https://laravel.com/docs/9.x/releases#support-policy) to see support policy.
+
+## Summary
+- <a href="#requirements">Requirements</a>
+- <a href="#installation">Installation</a>
+- <a href="#configuration">Configuration</a>
+- <a href="#usage">Usage</a>
+  - <a href="#generate-layers">Generate Layers</a>
+  - <a href="#generate-layers-with-subfolders">Generate Layers with Subfolders</a>
+  - <a href="#generate-services-with-more-than-one-repository">Generate Services with more than one repository</a>
 
 ## Requirements
 
 ```json
 "php": "^8.0.2"
-"illuminate/support": "^9.0"
-"illuminate/console": "^9.0"
 "symfony/finder": "^6.3"
+"illuminate/support": "^9.0 || ^10.20"
+"illuminate/console": "^9.0 || ^10.20"
 ```
 
 ## Installation
@@ -20,6 +29,35 @@ Go to [Laravel Docs](https://laravel.com/docs/9.x/releases#support-policy) to se
 ```bash
 composer require williamjss/layers
 ```
+
+## Configuration
+
+```bash
+php artisan vendor:publish --tag=layers
+```
+
+**This command will copy Layers config to your project config folder**
+
+```php
+<?php
+
+return [
+
+    'namespace' => [
+        'repositories' => 'Repositories',
+        'services' => 'Services',
+    ],
+
+    'path' => [
+        'models' => app_path('Models'),
+        'repositories' => app_path('Repositories'),
+        'services' => app_path('Services'),
+    ]
+];
+
+```
+
+Into this file, you can switch the services/repositories default path. For this, keep the namespace and path keys both equals.
 
 ## Usage
 
@@ -34,6 +72,13 @@ Available options:
 - **-s** or **--service** : Generate a service for the model
 - **-r** or **--repository** : Generate a repository interface and eloquent for the model
 - **-a** or **--all** : Generate a service, repository interface and repository eloquent for the model
+- **--wr** : Specify the service's repositories
+
+*Subcommands*
+- `php artisan layers:repository --eloquent` : the same as ***php artisan layers --eloquent***
+- `php artisan layers:repository --interface` : the same as ***php artisan layers --interface***
+- `php artisan layers:service` : the same as ***php artisan layers --service***
+- `php artisan layers:binds` : List all binds from application 
 
 ### Generate Layers
 ```bash
@@ -180,65 +225,18 @@ namespace App\Services;
 
 use App\Repositories\UserRepositoryInterface;
 
-
 class UserService
 {
     private $repoUser;
 
-    public function __construct(UserRepositoryInterface $repoUser)
+    public function __construct(
+        UserRepositoryInterface $repoUser,
+    )
     {
         $this->repoUser = $repoUser;
     }
 
-    /**
-     * Stores a new instance of User in the database
-     * @param \Illuminate\Support\Collection|array|int|string $data
-     * @return \App\Models\User
-     */
-    public function store(array $data)
-    {
-        return $this->repoUser->store($data);
-    }
-
-    /**
-     * Returns all instances of User from the database
-     * @return \Illuminate\Database\Eloquent\Collection<int, static>
-     */
-    public function getList()
-    {
-        return $this->repoUser->getList();
-    }
-
-    /**
-     * Returns an instance of User from the given id
-     * @param int|string $id
-     * @return \App\Models\User
-     */
-    public function get($id)
-    {
-        return $this->repoUser->get($id);
-    }
-
-    /**
-     * Updates the data of an instance of User
-     * @param \Illuminate\Support\Collection|array|int|string $data
-     * @param int|string $id
-     * @return \App\Models\User
-     */
-    public function update(array $data, $id)
-    {
-        return $this->repoUser->update($data, $id);
-    }
-
-    /**
-     * Removes an instance of User from the database
-     * @param int|string $id
-     * @return int
-     */
-    public function destroy($id)
-    {
-        return $this->repoUser->destroy($id);
-    }
+    // Add your functions here...
 }
 
 ```
@@ -253,3 +251,37 @@ php artisan layers --repository User.Address
 - app/Repositories/User/AddressRepositoryEloquent.php
 
 <img src="./assets/structure_folder_with_subfolders.png" alt="Structure Folder with Subfolders" />
+
+### Generate Services with more than one repository
+```bash
+php artisan layers --service --wr=Address --wr=User Person
+```
+
+**This command will generate the follow file:**
+
+```php
+<?php
+
+namespace App\Services;
+
+use App\Repositories\UserRepositoryInterface;
+use App\Repositories\User\AddressRepositoryInterface;
+
+class PersonService
+{
+    private $repoAddress;
+    private $repoUser;
+
+    public function __construct(
+        AddressRepositoryInterface $repoAddress,
+        UserRepositoryInterface $repoUser,
+    )
+    {
+        $this->repoAddress = $repoAddress;
+        $this->repoUser = $repoUser;
+    }
+
+    // Add your functions here...
+}
+
+```
