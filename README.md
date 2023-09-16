@@ -27,7 +27,7 @@ Go to [Laravel Docs](https://laravel.com/docs/9.x/releases#support-policy) to se
 ## Installation
 
 ```bash
-composer require williamjss/layers
+composer require williamjss/layers --dev
 ```
 
 ## Configuration
