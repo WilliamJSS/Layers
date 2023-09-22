@@ -19,7 +19,7 @@ interface {{ class }}RepositoryInterface
      * Returns all instances of {{ class }} from the database
      * @param array|string $columns
      * @param array<array> $filters
-     * @return \Illuminate\Database\Eloquent\Collection<int, static>
+     * @return \Illuminate\Database\Eloquent\Collection<int, {{ class }}>
      */
     public function getList($columns=['*'], $filters=null);
 
